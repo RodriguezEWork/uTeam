@@ -18,8 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first-name',
-        'last-name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'birthdate',
@@ -57,7 +57,7 @@ class User extends Authenticatable
      */
     public static function findByIdOrName($value)
     {
-        return self::whereRaw("CONCAT(first_name, ' ', last_name) = ?", [$value])
+        return self::whereRaw("first_name || ' ' || last_name = ?", [$value])
             ->orWhere('id', $value)
             ->first();
     }

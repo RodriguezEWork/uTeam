@@ -16,8 +16,8 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first-name' => $this->name,
-            'last-name' => $this->last_name, // Asegúrate de que este campo exista en tu modelo
+            'last_name' => $this->last_name,
+            'first_name' => $this->first_name,
             'birthdate' => $this->birthdate,
             'has-insurance' => $this->has_insurance,
             'favourite-movies' => $this->movies->map(function ($movie) {

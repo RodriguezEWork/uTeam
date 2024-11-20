@@ -18,8 +18,8 @@ class UserCollection extends ResourceCollection
             'data' => $this->collection->map(function ($user) {
                 return [
                     'id' => $user->id,
-                    'first-name' => $user->name,
-                    'last-name' => $user->last_name,
+                    'last_name' => $user->last_name,
+                    'first_name' => $user->first_name,
                     'birthdate' => $user->birthdate,
                     'has-insurance' => $user->has_insurance,
                     'favourite-movies' => $user->movies->map(function ($movie) {
