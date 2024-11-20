@@ -84,6 +84,8 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    'max_movies_per_person' => env('MAX_MOVIES_PER_PERSON', 5),
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

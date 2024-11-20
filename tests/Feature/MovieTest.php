@@ -13,7 +13,7 @@ class MovieTest extends TestCase
     /** @test */
     public function it_can_create_a_movie()
     {
-        $response = $this->postJson('/movies', [
+        $response = $this->postJson('/api/movies', [
             'title' => 'Inception',
             'genre' => 1,
         ]);
@@ -27,7 +27,7 @@ class MovieTest extends TestCase
     {
         $movie = Movie::factory()->create();
 
-        $response = $this->putJson("/movies/{$movie->id}", [
+        $response = $this->putJson("/api/movies/{$movie->id}", [
             'title' => 'The Matrix',
             'genre' => 2,
         ]);
@@ -41,7 +41,7 @@ class MovieTest extends TestCase
     {
         $movie = Movie::factory()->create();
 
-        $response = $this->deleteJson("/movies/{$movie->id}");
+        $response = $this->deleteJson("/api/movies/{$movie->id}");
 
         $response->assertStatus(200);
         $this->assertDatabaseMissing('movies', ['id' => $movie->id]);

@@ -91,6 +91,10 @@ class UserController extends Controller
             'movie_id' => 'required|exists:movies,id',
         ]);
 
+        if ($user->movies()->count() >= config('app.max_movies_per_person')) {
+            return response()->json(['error' => 'Maximum movie limit reached'], 400);
+        }
+
         $user->movies()->attach($validatedData['movie_id']);
         return response()->json(['message' => 'Movie added to user successfully.'], 200);
     }

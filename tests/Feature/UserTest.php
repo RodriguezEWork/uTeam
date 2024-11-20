@@ -15,7 +15,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_can_create_a_user()
     {
-        $response = $this->postJson('/users', [
+        $response = $this->postJson('/api/users', [
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'john@example.com',
@@ -33,7 +33,7 @@ class UserTest extends TestCase
     {
         User::factory()->count(3)->create();
 
-        $response = $this->getJson('/users');
+        $response = $this->getJson('/api/users');
 
         $response->assertStatus(200)
                  ->assertJsonCount(3, 'data');
@@ -44,7 +44,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->getJson("/users/{$user->id}");
+        $response = $this->getJson("/api/users/{$user->id}");
 
         $response->assertStatus(200)
                  ->assertJson(['id' => $user->id]);
@@ -55,7 +55,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->getJson("/users/{$user->first_name} {$user->last_name}");
+        $response = $this->getJson("/api/users/{$user->first_name} {$user->last_name}");
 
         $response->assertStatus(200)
                  ->assertJson(['first_name' => $user->first_name, 'last_name' => $user->last_name]);
@@ -66,7 +66,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->putJson("/users/{$user->id}", [
+        $response = $this->putJson("/api/users/{$user->id}", [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
             'email' => 'jane@example.com',
@@ -84,7 +84,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->deleteJson("/users/{$user->id}");
+        $response = $this->deleteJson("/api/users/{$user->id}");
 
         $response->assertStatus(204);
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
@@ -96,7 +96,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
         $movie = Movie::factory()->create();
 
-        $response = $this->postJson("/users/{$user->id}/movies", [
+        $response = $this->postJson("/api/users/{$user->id}/movies", [
             'movie_id' => $movie->id,
         ]);
 
@@ -111,7 +111,7 @@ class UserTest extends TestCase
         $movie = Movie::factory()->create();
         $user->movies()->attach($movie->id);
 
-        $response = $this->deleteJson("/users/{$user->id}/movies", [
+        $response = $this->deleteJson("/api/users/{$user->id}/movies", [
             'movie_id' => $movie->id,
         ]);
 
