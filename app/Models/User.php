@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first-name',
+        'last-name',
         'email',
         'password',
+        'birthdate',
+        'has-insurance'
     ];
 
     /**
@@ -44,5 +47,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Find a user by ID or name.
+     *
+     * @param  string|int  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public static function findByIdOrName($value)
+    {
+        return self::whereRaw("CONCAT(first_name, ' ', last_name) = ?", [$value])
+            ->orWhere('id', $value)
+            ->first();
+    }
+
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, 'movie_user');
     }
 }
